@@ -23,7 +23,7 @@ namespace TALLEREF9
     /// </summary>
     public partial class UCUpdate : UserControl
     {
-        private readonly TallerEFContext _context = new TallerEFContext();
+        private TallerEFContext _context = new TallerEFContext();
         private CollectionViewSource clienteViewSource;
         private CollectionViewSource clienteViewSource2;
         private CollectionViewSource cuentasClienteViewSource;
@@ -36,6 +36,7 @@ namespace TALLEREF9
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            _context = new TallerEFContext();
             _context.Clientes.Load();
             _context.CuentasCliente.Load();
             clienteViewSource.Source = _context.Clientes.Local.ToObservableCollection();

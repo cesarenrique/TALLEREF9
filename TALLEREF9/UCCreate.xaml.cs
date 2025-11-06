@@ -24,7 +24,7 @@ namespace TALLEREF9
     public partial class UCCreate : UserControl
     {
 
-        private readonly TallerEFContext _context = new TallerEFContext();
+        private  TallerEFContext _context = new TallerEFContext();
         private CollectionViewSource clienteViewSource;
         public UCCreate()
         {
@@ -33,6 +33,7 @@ namespace TALLEREF9
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            _context = new TallerEFContext();
             _context.Clientes.Load();
             clienteViewSource.Source = _context.Clientes.Local.ToObservableCollection();
         }

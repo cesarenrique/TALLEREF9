@@ -32,6 +32,9 @@
             <TabItem Header="Borrar">
                 <local:UCDelete></local:UCDelete>
             </TabItem>
+            <TabItem Header="Cliente">
+                <local:UCLookForID></local:UCLookForID>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

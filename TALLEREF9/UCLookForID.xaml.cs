@@ -18,13 +18,13 @@ using TALLEREF9.DB;
 namespace TALLEREF9
 {
     /// <summary>
-    /// Lógica de interacción para UCRead.xaml
+    /// Lógica de interacción para UCLookForID.xaml
     /// </summary>
-    public partial class UCRead : UserControl
+    public partial class UCLookForID : UserControl
     {
         private TallerEFContext _context = new TallerEFContext();
         private CollectionViewSource clienteViewSource;
-        public UCRead()
+        public UCLookForID()
         {
             InitializeComponent();
             clienteViewSource = (CollectionViewSource)FindResource(nameof(clienteViewSource));
@@ -32,7 +32,15 @@ namespace TALLEREF9
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             _context = new TallerEFContext();
-            _context.Clientes.Load();
+            _context.Clientes.Where(p=>p.Id==0).Load();
+            clienteViewSource.Source = _context.Clientes.Local.ToObservableCollection();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int id = TBId.Value.Value;
+            _context = new TallerEFContext();
+            _context.Clientes.Where(p => p.Id == id).Load();
             clienteViewSource.Source = _context.Clientes.Local.ToObservableCollection();
         }
     }
