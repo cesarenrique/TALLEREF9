@@ -35,6 +35,9 @@
             <TabItem Header="Cliente">
                 <local:UCLookForID></local:UCLookForID>
             </TabItem>
+            <TabItem Header="Cuentas">
+                <local:UCLookForCuenta></local:UCLookForCuenta>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
