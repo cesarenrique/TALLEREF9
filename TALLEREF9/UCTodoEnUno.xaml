@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="TALLEREF9.UCTodoEnUno"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:TALLEREF9"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="clienteViewSource"/>
+        <CollectionViewSource x:Key="cuentasClienteViewSource" />
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Button Content="Buscar Todos" Width="300" Margin="0,20"  Click="ButtonTodos_Click"></Button>
+            <Separator Margin="10,10,10,10"></Separator>
+            <xctk:IntegerUpDown x:Name="TBId" Width="100" Minimum="0" Maximum="10000" Value="10" />
+            <Button Content="Buscar" Width="200" Click="ButtonID_Click"></Button>
+            <!--Label Content="Nota: Para cuenta sin usuario usar el usuario id=0"></Label-->
+        </StackPanel>
+        <DataGrid x:Name="clienteDataGrid" Grid.Row="1" ItemsSource="{Binding Source={StaticResource
+clienteViewSource}}" Margin="10,10,10,10" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="mostrarCliente">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn Binding="{Binding Nombre}" Header="Nombre" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Identificacion}" Header="Identificación" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2">
+            <StackPanel  Margin="10,0" Width="400" HorizontalAlignment="Left" Orientation="Horizontal"  Height="25">
+                <Label Content="ID" Margin="0,0,0,0" Width="100"></Label>
+                <Label Content="Nombre" Margin="0,0,0,0" Width="100"></Label>
+                <Label Content="Identificación" Margin="0,0,0,0" Width="100"></Label>
+            </StackPanel>
+            <StackPanel Margin="10,0" Width="700" HorizontalAlignment="Left" Orientation="Horizontal" Height="25">
+                <TextBox Name="ClienteIDTextBox" IsReadOnly="True" Width="100" ></TextBox>
+                <TextBox Name="ClienteNombreTextBox" Width="100"></TextBox>
+                <TextBox Name="ClienteIdentificacionTextBox" Width="100" ></TextBox>
+                <Button x:Name="BTGuardarCliente" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Click="GuardarCliente_Click" Margin="10,0,0,0" Content="Guardar"></Button>
+                <Button x:Name="BTGuardarClienteDesseleccionar" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Click="GuardarClienteDeseleccionar_Click" Margin="10,0,0,0" Content="Desseleccionar"></Button>
+                <Button x:Name="BTBorrarCliente" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Click="EliminarCliente_Click" Margin="10,0,0,0" Content="Eliminar"></Button>
+            </StackPanel>
+            <StackPanel Margin="10,10,10,10" Width="600" HorizontalAlignment="Left" Orientation="Horizontal" Height="25">
+                <Label Content="Rango:" HorizontalAlignment="Center"></Label>
+                <xctk:IntegerUpDown x:Name="TBmin" Width="100" Minimum="0" Maximum="1000000" Value="0" />
+                <xctk:IntegerUpDown x:Name="TBmax" Width="100" Minimum="0" Maximum="1000000" Value="10000000" />
+                <Button Content="Buscar" Width="200" Click="ButtonCuentaRango_Click"></Button>
+            </StackPanel>
+           
+        </StackPanel>
+        <DataGrid x:Name= "cuentasDataGrid" Grid.Row="3" ItemsSource="{Binding Source={StaticResource
+cuentasClienteViewSource}}" Margin="0,50,10,10" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="mostrarCuentaCliente">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn Binding="{Binding Nombre}" Header="Nombre" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Saldo}" Header="Saldo" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Cliente.Id}" Header="Cliente" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Descripcion}" Header="Descripción" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="4">
+            <StackPanel Orientation="Horizontal" Margin="40,0" Width="600" HorizontalAlignment="Left"  Height="25">
+                <Label Content="Cuenta cliente" Width="100"></Label>
+                <Label Content="Nombre:" Width="100"></Label>
+                <Label Content="Descripción:" Width="100"></Label>
+                <Label Content="Saldo:" Width="100"></Label>
+                <Label Content="Cliente:" Width="100"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0" Width="750" HorizontalAlignment="Left"  Height="25">
+                <TextBox Name="CuentaClienteIdTextBox" Width="100"  IsReadOnly="True"></TextBox>
+                <TextBox Name="CuentaClienteNombreTextBox" Width="100" ></TextBox>
+                <TextBox Name="CuentaClienteDescripcionTextBox" Width="100" ></TextBox>
+                <TextBox Name="CuentaClienteSaldoTextBox" Width="100" ></TextBox>
+                <xctk:IntegerUpDown x:Name="CuentaClienteCliente" Width="100" Minimum="0" Maximum="1000000"  />
+                <Button x:Name="BTGuardarCuenta" HorizontalAlignment="Right" Width="100" Click="GuardarCuentaCliente_Click" Margin="10,0,0,0"  Content="Guardar"></Button>
+                <Button x:Name="BTGuardarCuentaClienteDesseleccionar" HorizontalAlignment="Right" Width="120" Click="GuardarCuentaDeseleccionar_Click" Margin="10,0,0,0" Content="Desseleccionar"></Button>
+            </StackPanel>
+            <StackPanel Margin="0,10" Width="400" HorizontalAlignment="Left" Orientation="Horizontal"  Height="25">
+                <Button x:Name="BTElimnarCuenta" HorizontalAlignment="Right" Width="100" Click="EliminarCuentaCliente_Click" Margin="10,0,0,0"  Content="Eliminar Cuenta"></Button>
+            </StackPanel>
+            <StackPanel  Margin="0,0" Width="400" HorizontalAlignment="Left" Orientation="Horizontal"  Height="25">
+                <Label Content="ID" Margin="0,0,0,0" Width="100"></Label>
+                <Label Content="Nombre" Margin="0,0,0,0" Width="100"></Label>
+                <Label Content="Identificación" Margin="0,0,0,0" Width="100"></Label>
+            </StackPanel>
+            <StackPanel  Margin="0,0" Width="400" HorizontalAlignment="Left" Orientation="Horizontal"  Height="25">
+                <Label Name="LBIdSelect" Content="" Margin="0,0,0,0" Width="100"></Label>
+                <Label Name="LBNombreSelect"  Content="" Margin="0,0,0,0" Width="100"></Label>
+                <Label Name="LBIdentificacionSelect" Content="" Margin="0,0,0,0" Width="100"></Label>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

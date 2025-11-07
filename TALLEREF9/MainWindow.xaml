@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TALLEREF9"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="950" Width="800">
     <Grid>
         <TabControl>
             <TabItem Header="Principal">
@@ -37,6 +37,9 @@
             </TabItem>
             <TabItem Header="Cuentas">
                 <local:UCLookForCuenta></local:UCLookForCuenta>
+            </TabItem>
+            <TabItem Header="Todo">
+                <local:UCTodoEnUno></local:UCTodoEnUno>
             </TabItem>
         </TabControl>
     </Grid>
