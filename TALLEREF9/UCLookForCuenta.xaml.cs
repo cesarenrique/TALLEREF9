@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -28,18 +30,34 @@ namespace TALLEREF9
     {
         private TallerEFContext _context = new TallerEFContext();
         private CollectionViewSource cuentasClienteViewSource3;
+        private CollectionViewSource clienteViewSource3;
         public UCLookForCuenta()
         {
             InitializeComponent();
             cuentasClienteViewSource3 = (CollectionViewSource)FindResource(nameof(cuentasClienteViewSource3));
+            clienteViewSource3 = (CollectionViewSource)FindResource(nameof(clienteViewSource3));
         }
+
+
+
+        private void mostrarCliente(object sender, RoutedEventArgs e) {
+            if (cuentasDataGrid.SelectedItem is CuentaCliente seleccionada)
+            {
+                _context = new TallerEFContext();
+                _context.Clientes.Where(p => p.Id == seleccionada.Cliente.Id).Load();
+                clienteViewSource3.Source = _context.Clientes.Local.ToList();
+            }
+            
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-           
+            int topeMin = TBmin.Value.Value;
+            int topeMax = TBmax.Value.Value;
             var listaCuentaClientes = new List<CuentaCliente>();
             using SqlConnection connection = new SqlConnection("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = TallerEF");
             connection.Open();
-            String sql = "SELECT * FROM CuentasCliente";
+            String sql = "SELECT * FROM CuentasCliente cc WHERE " + topeMin.ToString() + "<=cc.saldo and cc.saldo<=" + topeMax.ToString();
             using SqlCommand command = new SqlCommand(sql, connection);
             using SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -54,14 +72,33 @@ namespace TALLEREF9
                 cc.Cliente = c;
                 listaCuentaClientes.Add(cc);
             }
-            //cuentasClienteViewSource3.Source = listaCuentaClientes.ToObservableCollection(); ;
-            _context.Clientes.Load();
+            cuentasClienteViewSource3.Source = new ObservableCollection<CuentaCliente>(listaCuentaClientes);
            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-   
+            int topeMin = TBmin.Value.Value;
+            int topeMax = TBmax.Value.Value;
+            var listaCuentaClientes = new List<CuentaCliente>();
+            using SqlConnection connection = new SqlConnection("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = TallerEF");
+            connection.Open();
+            String sql = "SELECT * FROM CuentasCliente cc WHERE " + topeMin.ToString() + "<=cc.saldo and cc.saldo<=" + topeMax.ToString();
+            using SqlCommand command = new SqlCommand(sql, connection);
+            using SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                CuentaCliente cc = new CuentaCliente();
+                cc.Id = reader.GetInt32(0);
+                cc.Nombre = reader.GetString(1);
+                cc.Descripcion = reader.GetString(2);
+                cc.Saldo = reader.GetDecimal(3);
+                Cliente c = new Cliente();
+                c.Id = reader.GetInt32(reader.GetOrdinal("ClienteId"));
+                cc.Cliente = c;
+                listaCuentaClientes.Add(cc);
+            }
+            cuentasClienteViewSource3.Source = new ObservableCollection<CuentaCliente>(listaCuentaClientes);
         }
     }
 }

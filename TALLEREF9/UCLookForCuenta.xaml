@@ -10,8 +10,7 @@
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="cuentasClienteViewSource3"/>
-        <CollectionViewSource x:Key="clienteViewSource3" Source="{Binding Cliente,
-Source={StaticResource cuentasClienteViewSource3}}"/>
+        <CollectionViewSource x:Key="clienteViewSource3"  />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -20,13 +19,13 @@ Source={StaticResource cuentasClienteViewSource3}}"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <Label Content="ID:"></Label>
+            <Label Content="Rango:" HorizontalAlignment="Center"></Label>
             <xctk:IntegerUpDown x:Name="TBmin" Width="100" Minimum="0" Maximum="1000000" Value="10" />
             <xctk:IntegerUpDown x:Name="TBmax" Width="100" Minimum="0" Maximum="1000000" Value="100" />
             <Button Content="Buscar" Width="200" Click="Button_Click"></Button>
         </StackPanel>
         <DataGrid x:Name= "cuentasDataGrid" Grid.Row="1" ItemsSource="{Binding Source={StaticResource
-cuentasClienteViewSource3}}" Margin="10,10,10,10" IsReadOnly="True" AutoGenerateColumns="False">
+cuentasClienteViewSource3}}" SelectionChanged="mostrarCliente" Margin="10,10,10,10" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
                 <DataGridTextColumn Binding="{Binding Nombre}" Header="Nombre" Width="100"/>
@@ -35,8 +34,9 @@ cuentasClienteViewSource3}}" Margin="10,10,10,10" IsReadOnly="True" AutoGenerate
                 <DataGridTextColumn Binding="{Binding Descripcion}" Header="Descripción" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="clienteDataGrid" Grid.Row="2" ItemsSource="{Binding Source={StaticResource
-clienteViewSource3}}" Margin="10,10,10,10" IsReadOnly="True" AutoGenerateColumns="False">
+
+
+        <DataGrid x:Name="clienteDataGrid" Grid.Row="2" ItemsSource="{Binding Source={StaticResource clienteViewSource3}}" Margin="10,10,10,10" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
                 <DataGridTextColumn Binding="{Binding Nombre}" Header="Nombre" Width="100"/>
