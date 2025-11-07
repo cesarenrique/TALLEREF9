@@ -151,12 +151,12 @@ namespace TALLEREF9
                 ClienteNombreTextBox.Text = seleccionado3.Nombre;
                 ClienteIdentificacionTextBox.Text = seleccionado3.Identificacion;
                 BTGuardarCliente.Content = "Editar";
-               
-                seleccionado = _context.Clientes.Where(p => p.Id == seleccionado3.Id).First();
-                mostrarCuentasConId();
-                interesCliente(seleccionado);
-                CuentaClienteCliente.Value=seleccionado.Id;
-
+                    if (_context.Clientes.Where(p => p.Id == seleccionado3.Id).Count()>0) { 
+                    seleccionado = _context.Clientes.Where(p => p.Id == seleccionado3.Id).First();
+                    mostrarCuentasConId();
+                    interesCliente(seleccionado);
+                    CuentaClienteCliente.Value = seleccionado.Id;
+                }
             }
         }
 
