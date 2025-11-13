@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="TALLEREF9.UCTodoAlternativo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TALLEREF9"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" 
+             d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="clienteViewSource"/>
+        <CollectionViewSource x:Key="cuentasClienteViewSource" Source="{Binding Cuentas,
+Source={StaticResource clienteViewSource}}"/>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+  
+        <DataGrid x:Name="clienteDataGrid" Grid.Row="0" ItemsSource="{Binding Source={StaticResource
+clienteViewSource}}" Margin="10,10,10,10" IsReadOnly="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn Binding="{Binding Nombre}" Header="Nombre" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Identificacion}" Header="Identificación" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <Button Width="100" Content="Guardar" Click="ButtonGuardarCliente_Click"></Button>
+                <Button Width="100" Content="Deshacer"  Click="ButtonDeshacerCliente_Click"></Button>
+
+            </StackPanel>
+        </StackPanel>
+        <DataGrid x:Name= "cuentasDataGrid" Grid.Row="2" ItemsSource="{Binding Source={StaticResource
+cuentasClienteViewSource}}" Margin="10,10,10,10" IsReadOnly="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn Binding="{Binding Nombre}" Header="Nombre" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Saldo}" Header="Saldo" Width="100"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Cliente.Id}" Header="Cliente" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Descripcion}" Header="Descripción" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="3">
+            <StackPanel Orientation="Horizontal">
+                <Button Width="100" Content="Guardar" Click="ButtonGuardarCuenta_Click"></Button>
+                <Button Width="100" Content="Deshacer" Click="ButtonDeshacerCuenta_Click"></Button>
+     
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

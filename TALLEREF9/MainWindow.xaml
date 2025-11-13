@@ -41,6 +41,9 @@
             <TabItem Header="Todo">
                 <local:UCTodoEnUno></local:UCTodoEnUno>
             </TabItem>
+            <TabItem Header="TodoAlternativo">
+                <local:UCTodoAlternativo></local:UCTodoAlternativo>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
